@@ -119,4 +119,7 @@ for ((i=0; i<4; i++)); do
 done
 
 
-echo $gateway
+echo " SUMMARIZE "
+echo "- 10G interface 1: $ip_address"
+echo "- 10G interface 1: $subnet_prefix"
+echo "- 10G interface 2: $gateway"
