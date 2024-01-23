@@ -38,12 +38,13 @@ while true; do
     echo "----------"
     # Check if entered variables are in the valid list
     if [[ " ${valid_values[@]} " =~ " $C1G1 " && " ${valid_values[@]} " =~ " $C1G2 " && " ${valid_values[@]} " =~ " $C10G1 " && " ${valid_values[@]} " =~ " $C10G2 " ]]; then
-        echo -e "\nAll variables are in the valid list."
+        echo "All variables are in the valid list."
     else
-        echo -e "\nPlease enter valid values for all variables. Retry."
+        echo "Please enter valid values for all variables. Retry."
         continue
     fi
 
+    echo "----------"
     # Ask for confirmation
     read -p "Are these correct? (yes/no): " confirmation
 
@@ -57,7 +58,7 @@ while true; do
     fi
 done
 
-
+echo "==============="
 while true; do
     read -p "Give us IP address for this server: " ip_address
     # Ask for confirmation
@@ -71,6 +72,7 @@ while true; do
     fi
 done
 
+echo "==============="
 while true; do
     read -p "How about the subnet prefix: " subnet_prefix
     if [[ $subnet_prefix =~ ^[0-9]+$ ]] && [ $subnet_prefix -ge 0 ] && [ $subnet_prefix -le 32 ]; then
