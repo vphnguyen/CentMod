@@ -66,6 +66,7 @@ while true; do
     echo && echo  "[     IP ADDRESS     ]" && echo 
     read -p "Give us IP address for this server: " ip_address
     # Ask for confirmation
+    echo "----------"
     read -p "Are these correct? (yes/no): " confirm
     if [[ $confirm == "yes" ]]; then
         echo "Confirmation received. Continue."
@@ -88,7 +89,8 @@ while true; do
         echo "Please enter valid subnet prefix. Retry."
         echo "----------"
     fi
-    read -p "Are these correct? (yes/no): "
+    read -p "Are these correct? (yes/no): " 
+    echo "----------"
     if [[ $confirm == "yes" ]]; then
         echo "Confirmation received. Continue."
         break
