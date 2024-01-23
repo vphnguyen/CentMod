@@ -58,14 +58,36 @@ while true; do
 done
 
 
+while true; do
+    read -p "Give us IP address for this server: " ip_address
+    # Ask for confirmation
+    read -p "Are these correct? (yes/no): "
+    if [[ $confirm == "yes" ]]; then
+        echo "Confirmation received. Continue."
+        break
+    else
+        echo "Please try again."
+        echo "----------"
+    fi
+done
 
-
-
-
-
-
-ip_address="42.115.20.44"
-subnet="27"
+while true; do
+    read -p "How about the subnet prefix: " subnet_prefix
+    if [[ $subnet_prefix =~ ^[0-9]+$ ]] && [ $subnet_prefix -ge 0 ] && [ $subnet_prefix -le 32 ]; then
+        echo "Subnet prefix is valid: $subnet_prefix"
+        break
+    else
+        echo "Please enter valid subnet prefix. Retry."
+    fi
+    read -p "Are these correct? (yes/no): "
+    if [[ $confirm == "yes" ]]; then
+        echo "Confirmation received. Continue."
+        break
+    else
+        echo "Please try again."
+        echo "----------"
+    fi
+done
 
 
 gateway=''
