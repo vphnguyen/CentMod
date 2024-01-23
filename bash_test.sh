@@ -11,7 +11,7 @@ while true; do
         echo "$index: ${valid_values[index]}"
     done
     echo "----------"
-    
+
     # Request user input for index of variable 1
     read -p "Enter the index for 1G interface 1: " index_C1G1
     C1G1="${valid_values[index_C1G1]}"
@@ -41,7 +41,9 @@ while true; do
     if [[ " ${valid_values[@]} " =~ " $C1G1 " && " ${valid_values[@]} " =~ " $C1G2 " && " ${valid_values[@]} " =~ " $C10G1 " && " ${valid_values[@]} " =~ " $C10G2 " ]]; then
         echo -e "\nAll variables are in the valid list."
     else
+        echo "----------"
         echo "Please enter valid values for all variables. Retry."
+        echo "----------"
         continue
     fi
 
@@ -59,8 +61,9 @@ while true; do
     fi
 done
 
-echo -e "\n[     IP ADDRESS     ]"
 while true; do
+    echo "==============="
+    echo && echo  "[     IP ADDRESS     ]" && echo 
     read -p "Give us IP address for this server: " ip_address
     # Ask for confirmation
     read -p "Are these correct? (yes/no): " confirm
@@ -73,15 +76,17 @@ while true; do
     fi
 done
 
-echo -e "\n[     SUBNET PREFIX     ]"
-echo "==============="
+
 while true; do
+    echo "==============="
+    echo && echo "[     SUBNET PREFIX     ]" && echo 
     read -p "How about the subnet prefix: " subnet_prefix
     if [[ $subnet_prefix =~ ^[0-9]+$ ]] && [ $subnet_prefix -ge 0 ] && [ $subnet_prefix -le 32 ]; then
         echo "Subnet prefix is valid: $subnet_prefix"
         break
     else
         echo "Please enter valid subnet prefix. Retry."
+        echo "----------"
     fi
     read -p "Are these correct? (yes/no): "
     if [[ $confirm == "yes" ]]; then
