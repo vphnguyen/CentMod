@@ -1,15 +1,17 @@
 
 # Generate a list of valid values using the ls command
-echo "[     NETWORK INTERFACE     ]" && echo
-valid_values=($(ls /sys/class/net/))
 
-# Display all valid values with indexes
-echo "List of all interfaces:"
-for index in "${!valid_values[@]}"; do
-    echo "$index: ${valid_values[index]}"
-done
-echo "----------"
 while true; do
+    echo  && echo "[     NETWORK INTERFACE     ]" && echo
+    valid_values=($(ls /sys/class/net/))
+
+    # Display all valid values with indexes
+    echo "List of all interfaces:"
+    for index in "${!valid_values[@]}"; do
+        echo "$index: ${valid_values[index]}"
+    done
+    echo "----------"
+    
     # Request user input for index of variable 1
     read -p "Enter the index for 1G interface 1: " index_C1G1
     C1G1="${valid_values[index_C1G1]}"
