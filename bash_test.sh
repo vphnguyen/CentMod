@@ -1,39 +1,41 @@
 
 # Generate a list of valid values using the ls command
+echo "[Info section]"
 valid_values=($(ls /sys/class/net/))
 
-
 # Display all valid values with indexes
-echo "Danh sach ten cac card mang:"
+echo "List of all interfaces:"
 for index in "${!valid_values[@]}"; do
     echo "$index: ${valid_values[index]}"
 done
-
-
+echo "----------"
 while true; do
     # Request user input for index of variable 1
-    read -p "Nhap id card mang 1G so 1: " index_C1G1
+    read -p "Enter the index for 1G interface 1: " index_C1G1
     C1G1="${valid_values[index_C1G1]}"
 
     # Request user input for index of variable 2
-    read -p "Nhap id card mang 1G so 2: " index_C1G2
+    read -p "Enter the index for 1G interface 2: " index_C1G2
     C1G2="${valid_values[index_C1G2]}"
 
+    echo ""
     # Request user input for index of variable 3
-    read -p "Nhap id card mang 10G so 1: " index_C10G1
+    read -p "Enter the index for 10G interface 1: " index_C10G1
     C10G1="${valid_values[index_C10G1]}"
 
     # Request user input for index of variable 4
-    read -p "Nhap id card mang 10G so 2: " index_C10G2
+    read -p "Enter the index for 10G interface 2: " index_C10G2
     C10G2="${valid_values[index_C10G2]}"
 
+    echo "----------"
     # Display entered variables
-    echo -e "\nYou entered:"
-    echo "Variable 1: $C1G1"
-    echo "Variable 2: $C1G2"
-    echo "Variable 3: $C10G1"
-    echo "Variable 4: $C10G2"
+    echo "You entered:"
+    echo "- 1G interface 1: $C1G1"
+    echo "- 1G interface 2: $C1G2"
+    echo "- 10G interface 1: $C10G1"
+    echo "- 10G interface 2: $C10G2"
 
+    echo "----------"
     # Check if entered variables are in the valid list
     if [[ " ${valid_values[@]} " =~ " $C1G1 " && " ${valid_values[@]} " =~ " $C1G2 " && " ${valid_values[@]} " =~ " $C10G1 " && " ${valid_values[@]} " =~ " $C10G2 " ]]; then
         echo -e "\nAll variables are in the valid list."
@@ -51,8 +53,17 @@ while true; do
         break
     else
         echo "Please try again."
+        echo "----------"
     fi
 done
+
+
+
+
+
+
+
+
 ip_address="42.115.20.44"
 subnet="27"
 
