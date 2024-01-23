@@ -1,6 +1,6 @@
 
 # Generate a list of valid values using the ls command
-echo "[Info section]"
+echo "[     NETWORK INTERFACE     ]"
 valid_values=($(ls /sys/class/net/))
 
 # Display all valid values with indexes
@@ -38,7 +38,7 @@ while true; do
     echo "----------"
     # Check if entered variables are in the valid list
     if [[ " ${valid_values[@]} " =~ " $C1G1 " && " ${valid_values[@]} " =~ " $C1G2 " && " ${valid_values[@]} " =~ " $C10G1 " && " ${valid_values[@]} " =~ " $C10G2 " ]]; then
-        echo "All variables are in the valid list."
+        echo -e "\nAll variables are in the valid list."
     else
         echo "Please enter valid values for all variables. Retry."
         continue
@@ -58,11 +58,11 @@ while true; do
     fi
 done
 
-echo "==============="
+echo -e "\n[     IP ADDRESS     ]"
 while true; do
     read -p "Give us IP address for this server: " ip_address
     # Ask for confirmation
-    read -p "Are these correct? (yes/no): "
+    read -p "Are these correct? (yes/no): " confirm
     if [[ $confirm == "yes" ]]; then
         echo "Confirmation received. Continue."
         break
@@ -72,6 +72,7 @@ while true; do
     fi
 done
 
+echo -e "\n[     SUBNET PREFIX     ]"
 echo "==============="
 while true; do
     read -p "How about the subnet prefix: " subnet_prefix
