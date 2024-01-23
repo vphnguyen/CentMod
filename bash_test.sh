@@ -90,6 +90,7 @@ while true; do
 done
 
 
+
 gateway=''
 subnet_bit=$((0xFFFFFFFF << (32 - subnet)))
 subnet=$((subnet_bit >> 24 & 255)).$((subnet_bit >> 16 & 255)).$((subnet_bit >> 8 & 255)).$((subnet_bit & 255))
