@@ -1,6 +1,6 @@
 
 # Generate a list of valid values using the ls command
-echo "[     NETWORK INTERFACE     ]"
+echo "[     NETWORK INTERFACE     ]" && echo
 valid_values=($(ls /sys/class/net/))
 
 # Display all valid values with indexes
@@ -35,7 +35,6 @@ while true; do
     echo "- 10G interface 1: $C10G1"
     echo "- 10G interface 2: $C10G2"
 
-    echo "----------"
     # Check if entered variables are in the valid list
     if [[ " ${valid_values[@]} " =~ " $C1G1 " && " ${valid_values[@]} " =~ " $C1G2 " && " ${valid_values[@]} " =~ " $C10G1 " && " ${valid_values[@]} " =~ " $C10G2 " ]]; then
         echo -e "\nAll variables are in the valid list."
@@ -93,12 +92,11 @@ while true; do
 done
 
 
-
 gateway=''
-subnet_bit=$((0xFFFFFFFF << (32 - subnet)))
-subnet=$((subnet_bit >> 24 & 255)).$((subnet_bit >> 16 & 255)).$((subnet_bit >> 8 & 255)).$((subnet_bit & 255))
+subnet_bit=$((0xFFFFFFFF << (32 - subnet_prefix)))
+subnet_prefix=$((subnet_bit >> 24 & 255)).$((subnet_bit >> 16 & 255)).$((subnet_bit >> 8 & 255)).$((subnet_bit & 255))
 IFS=. read -r -a ip_parts <<< "$ip_address"
-IFS=. read -r -a subnet_parts <<< "$subnet"
+IFS=. read -r -a subnet_parts <<< "$subnet_prefix"
 for ((i=0; i<4; i++)); do
   if [ $i -eq 3 ]; then    
     gateway_part=$((ip_parts[i] &( subnet_parts[i] )  | 1 ))
