@@ -25,16 +25,6 @@ while true; do
         echo "$index: ${valid_values[index]}"
     done
     echo "----------"
-
-    # Request user input for index of variable 1
-    read -p "Card  1G - 1: " index_C1G1
-    C1G1="${valid_values[index_C1G1]}"
-
-    # Request user input for index of variable 2
-    read -p "Card  1G - 2: " index_C1G2
-    C1G2="${valid_values[index_C1G2]}"
-
-    echo ""
     # Request user input for index of variable 3
     read -p "Card 10G - 1: " index_C10G1
     C10G1="${valid_values[index_C10G1]}"
@@ -111,8 +101,6 @@ while true; do
   echo "----------"
   # Display entered variables
   echo "You entered:"
-  echo "- 1G interface 1: $C1G1"
-  echo "- 1G interface 2: $C1G2" && echo
   echo "- 10G interface 1: $C10G1"
   echo "- 10G interface 2: $C10G2"&& echo
   echo "- IP address: $ip_address/$subnet_prefix"
@@ -121,13 +109,43 @@ while true; do
   echo "----------"
   # ======================================== CONFIRM ========================================
   # Ask for confirmation
-  echo && echo "[     CONFIRM     ]" 
+  echo && echo "CONFIRM" 
   echo "----------"
   read -p "Are these correct? (yes/no): " confirmation
   # Check if the user entered 'yes' to exit the loop
   if [ "$confirmation" = "yes" ]; then
       echo "Confirmation received. Continue."
       echo "----------"
+
+      echo && echo "CONFIGURATION" 
+      echo "----------"
+      echo "Backing up"
+      new_folder="/home/ansible/netConfigBK_$(date +%Y%m%d-%H%M%S)" && mkdir -p "$new_folder" && cp /etc/sysconfig/network-scripts/ifcfg-* "$new_folder"
+      
+      echo "Config Card 10Gb - 1"
+      sed -i 's/BOOTPROTO=dhcp/BOOTPROTO=none/g' /etc/sysconfig/network-scripts/ifcfg-$C10G1
+      sed -i 's/ONBOOT=no/ONBOOT=yes/g' /etc/sysconfig/network-scripts/ifcfg-$C10G1
+      echo -e "MASTER=bond0\nSLAVE=yes\nUSERCTL=no" >> /etc/sysconfig/network-scripts/ifcfg-$C10G1
+      
+      echo "Config Card 10Gb - 2"
+      sed -i 's/BOOTPROTO=dhcp/BOOTPROTO=none/g' /etc/sysconfig/network-scripts/ifcfg-$C10G2
+      sed -i 's/ONBOOT=no/ONBOOT=yes/g' /etc/sysconfig/network-scripts/ifcfg-$C10G2
+      echo -e "MASTER=bond0\nSLAVE=yes\nUSERCTL=no" >> /etc/sysconfig/network-scripts/ifcfg-$C10G2
+
+      echo "Config IP address"
+      sed -i "s/THIS_IS_IP/$ip_address/g" /etc/sysconfig/network-scripts/ifcfg-bond0
+
+      echo "Config subnet-mask"
+      sed -i "s/THIS_IS_NETMASK/$subnet:/g"  /etc/sysconfig/network-scripts/ifcfg-bond0
+
+      echo "Config gateway"
+      sed -i "s/THIS_IS_GATEWAY/$gateway/g" /etc/sysconfig/network-scripts/ifcfg-bond0
+      echo "Restart NetworkManager"
+      systemctl restart NetworkManager
+      echo "----------"
+      echo "All done."
+      echo "----------"
+
       break
   else
       echo "----------"
